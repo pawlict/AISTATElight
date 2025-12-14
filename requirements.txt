@@ -1,0 +1,28 @@
+# --- ASR / transkrypcja ---
+openai-whisper
+
+# --- Diarizacja po głosie ---
+pyannote.audio
+
+# --- PyTorch (CPU/GPU zależnie od systemu) ---
+torch
+torchaudio
+
+# --- Diarizacja tekstu (embeddings + klasteryzacja) ---
+sentence-transformers
+scikit-learn
+
+# --- Dodatkowe (często potrzebne/pojawiają się jako zależności i unikają problemów) ---
+numpy
+scipy
+tqdm
+soundfile
+
+# --- HF / Transformers stack (często wymagane przez sentence-transformers / pyannote) ---
+huggingface-hub
+transformers
+tokenizers
+safetensors
+
+# --- Opcjonalne (czasem pomaga przy audio, ale kod ich nie wymaga) ---
+ffmpeg-python
