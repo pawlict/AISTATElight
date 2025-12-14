@@ -38,6 +38,10 @@ Dostępne metody:
 - Dla diarizacji pyannote: konto HF + token
 
 ---
+## Hugging Face Token (pyannote)
+- Diarizacja głosowa wymaga tokena HF. Wklej token w zakładce Ustawienia → zapisz (aplikacja zapisze do ~/.pyannote_hf_token)
+---
+
 ## 🚀 Instalacja
 
 ### 1 Aktualizacja systemu
@@ -67,3 +71,13 @@ pip install -r requirements.txt
 ```bash
 python3 AISTATElight.py
 ```
+---
+### Troubleshooting
+## “Unable to locate package telegram-desktop” / brak pakietów w systemie
+- To dotyczy APT — tutaj potrzebujesz ffmpeg i Pythona w venv. Upewnij się, że instalujesz pipem w venv.
+## Brak diarizacji po głosie
+- Sprawdź czy pyannote.audio jest zainstalowane, sprawdź token HF (Ustawienia).
+- Czasem model na HF wymaga akceptacji warunków na stronie repozytorium modelu.
+## ffmpeg error while converting audio
+- Sprawdź czy ffmpeg działa w terminalu: ffmpeg -version
+- Spróbuj inne wejściowe audio (czasem pliki mają uszkodzone metadane)
