@@ -42,7 +42,7 @@ Dostępne metody:
 - Diarizacja głosowa wymaga tokena HF. Wklej token w zakładce Ustawienia → zapisz (aplikacja zapisze do ~/.pyannote_hf_token)
 ---
 
-## 🚀 Instalacja
+## 🚀 Instalacja Linuks
 
 ### 1 Aktualizacja systemu
 ```bash
