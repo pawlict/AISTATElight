@@ -1,5 +1,5 @@
 # AISTATE Light Beta
-![Version](https://img.shields.io/badge/version-v1-blue)
+![Version](https://img.shields.io/badge/version-v2-blue)
 ![Python](https://img.shields.io/badge/python-3.8+-yellow)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
