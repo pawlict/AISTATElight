@@ -51,6 +51,7 @@ sudo apt-get update -y
 ### 2 Instalacja pakietów
 ```bash
 sudo apt install -y ffmpeg
+sudo apt install python3-tk
 ```
 ---
 ### 3 Instalacja programu
