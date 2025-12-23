@@ -82,7 +82,7 @@ This is **not** ML diarization — it just labels text units (lines/sentences) a
 
 ## Project structure (important files)
 
-- `mAISTATElight.py` — application entry point (+ splash screen)
+- `AISTATElight.py` — application entry point (+ splash screen)
 - `gui_pyside.py` — main window UI (tabs, actions, logging)
 - `backend/legacy_adapter.py` — Whisper transcription + pyannote diarization + helper utilities
 - `backend/voice_worker.py` — worker process for diarization (keeps GUI stable)
