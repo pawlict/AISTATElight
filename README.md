@@ -23,7 +23,7 @@
 ### System (Linux)
 Install FFmpeg (used to convert audio to stable PCM WAV when needed):
 ```bash
-sudo apt update
+sudo apt-get update
 sudo apt install -y ffmpeg
 ```
 ### Python
