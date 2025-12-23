@@ -24,7 +24,7 @@
 Install FFmpeg (used to convert audio to stable PCM WAV when needed):
 ```bash
 sudo apt-get update
-sudo apt install -y ffmpeg
+sudo apt install -y ffmpeg libsndfile1
 ```
 ### Python
 Recommended: **Python 3.11+** (your project is known to run on newer versions too, but PyTorch wheels may be easiest on 3.11).
@@ -44,6 +44,7 @@ python3 -m venv .AISTATElight
 source .AISTATElight/bin/activate
 
 python -m pip install --upgrade pip wheel setuptools
+pip install -U soundfile
 pip install -r requirements.txt
 ```
 ---
