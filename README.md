@@ -1,60 +1,39 @@
-# AISTATE Light Beta
-![Version](https://img.shields.io/badge/version-v2-blue)
+## AISTATE Light — *Artificial Intelligence Speech‑To‑Analysis‑Translation Engine*
+![Version](https://img.shields.io/badge/version-v1-blue)
 ![Python](https://img.shields.io/badge/python-3.8+-yellow)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 ---
 
-**AISTATE Light Beta** to narzędzie, służące do  transkrypcji i diaryzacji.  
+**AISTATE Light** is a transcription and diarization tool.  
 
 ---
 
-## ✨ Główne funkcjonalności
-
-### 1) Diarizacja tekstu (na bazie transkryptu)
-Dostępne metody:
-- **Szybka – naprzemienna**: oznacza linie jako `[SPK1]`, `[SPK2]`, … (w kółko)
-- **Embeddings (liczba mówców)**: embeddings + KMeans dla zadanej liczby mówców
-- **Embeddings (auto liczba mówców)**: dobór liczby klastrów przez silhouette score (2..max)
-
-### 2) Audio → transkrypcja (Whisper)
-- wybór modelu: `tiny/base/small/medium/large`
-- język: np. `pl` (lub puste = auto)
-- wynik trafia do lewego panelu jako transkrypt z timestampami
-
-### 3) Audio → transkrypcja + diarizacja po głosie (Whisper + pyannote)
-- Whisper robi segmenty czasowe (tekst)
-- pyannote robi segmenty mówców (głos)
-- aplikacja łączy je po **nakładaniu się w czasie** i generuje wynik w prawym panelu:  
-  `"[SPK1][00:00:05–00:00:10] ..."`
+## ✨ Main functionalities
+- **Transcribe audio to text** using **Whisper** (`openai-whisper`).
+- **Diarize speakers in audio** (who spoke when) using **pyannote.audio** (Hugging Face pipeline) + Whisper segments.
+- **“Text diarization” (heuristics)** — a simple alternating / block labeling of lines or sentences (no ML), useful when you already have plain text.
+- Show **live logs** inside the app (including worker/tqdm output from diarization and transcription when enabled).
+- Display a clean **Info tab rendered from Markdown** (`ui/Info_pl.md`, `ui/Info_en.md`) with logo and formatted sections.
 
 ---
-
-## Wymagania
-
-- Python: zalecane **3.10–3.12** (3.13 może działać zależnie od pakietów)
-- Systemowy **ffmpeg** (wymagany dla audio)
-- Biblioteki Python: patrz `requirements.txt`
-- Dla diarizacji pyannote: konto HF + token
-
----
-## Hugging Face Token (pyannote)
-- Diarizacja głosowa wymaga tokena HF. Wklej token w zakładce Ustawienia → zapisz (aplikacja zapisze do ~/.pyannote_hf_token)
 ---
 
-## 🚀 Instalacja Linuks
-
-### 1 Aktualizacja systemu
+## Requirements
+### System (Linux)
+Install FFmpeg (used to convert audio to stable PCM WAV when needed):
 ```bash
-sudo apt-get update -y
-```
-### 2 Instalacja pakietów
-```bash
+sudo apt update
 sudo apt install -y ffmpeg
-sudo apt install python3-tk
 ```
+### Python
+Recommended: **Python 3.11+** (your project is known to run on newer versions too, but PyTorch wheels may be easiest on 3.11).
+
 ---
-### 3 Instalacja programu
+### Hugging Face Token (pyannote)
+- Voice diarization requires an HF token. Paste the token in the Settings tab
+---
+### Program installation
 ```bash
 mkdir -p ~/projects
 cd ~/projects
@@ -64,21 +43,57 @@ cd AISTATElight
 python3 -m venv .AISTATElight
 source .AISTATElight/bin/activate
 
-pip install --upgrade pip
+python -m pip install --upgrade pip wheel setuptools
 pip install -r requirements.txt
 ```
 ---
-### 4 Uruchomienie programu
+### Run
 ```bash
 python3 AISTATElight.py
 ```
 ---
 ### Troubleshooting
-## “Unable to locate package telegram-desktop” / brak pakietów w systemie
-- To dotyczy APT — tutaj potrzebujesz ffmpeg i Pythona w venv. Upewnij się, że instalujesz pipem w venv.
-## Brak diarizacji po głosie
-- Sprawdź czy pyannote.audio jest zainstalowane, sprawdź token HF (Ustawienia).
-- Czasem model na HF wymaga akceptacji warunków na stronie repozytorium modelu.
-## ffmpeg error while converting audio
-- Sprawdź czy ffmpeg działa w terminalu: ffmpeg -version
-- Spróbuj inne wejściowe audio (czasem pliki mają uszkodzone metadane)
+## Hugging Face token (pyannote diarization)
+
+Voice diarization uses a Hugging Face pipeline (default tried first):
+- `pyannote/speaker-diarization-community-1`
+
+You typically need:
+1. A Hugging Face account
+2. A token (Settings tab → paste token)
+3. Acceptance of the model’s terms (some models are gated)
+
+> **Token storage:** the app stores settings (including HF token) in:  
+> `~/.config/AISTATElight/settings.json` (field: `hf_token`).
+
+---
+
+## Where “Text diarization” comes from (no Whisper / no pyannote)
+
+The “Text diarization” button on the Home tab uses **simple heuristics** (alternating speakers / block assignment).  
+It is implemented in:
+
+- `backend/legacy_adapter.py` → `diarize_text_simple(...)`
+
+This is **not** ML diarization — it just labels text units (lines/sentences) as `SPK1`, `SPK2`, etc.
+
+---
+
+## Project structure (important files)
+
+- `main.py` — application entry point (+ splash screen)
+- `gui_pyside.py` — main window UI (tabs, actions, logging)
+- `backend/legacy_adapter.py` — Whisper transcription + pyannote diarization + helper utilities
+- `backend/voice_worker.py` — worker process for diarization (keeps GUI stable)
+- `backend/transcribe_worker.py` — optional worker process for Whisper logs (if enabled)
+- `backend/settings_store.py` — settings load/save (stores HF token)
+- `ui/theme.py` — themes / palettes
+- `ui/Info_pl.md`, `ui/Info_en.md` — Info tab content (Markdown)
+- `ui/assets/logo.png` — logo used by Info tab and splash screen
+
+---
+
+## License
+
+MIT License (AS IS).  
+See the Info tab (Markdown) and/or `LICENSE` if present in the repository.
