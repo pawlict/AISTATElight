@@ -89,7 +89,6 @@ This is **not** ML diarization — it just labels text units (lines/sentences) a
 - `backend/settings_store.py` — settings load/save (stores HF token)
 - `ui/theme.py` — themes / palettes
 - `ui/Info_pl.md`, `ui/Info_en.md` — Info tab content (Markdown)
-- `ui/assets/logo.png` — logo used by Info tab and splash screen
 
 ---
 
