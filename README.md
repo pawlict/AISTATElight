@@ -14,7 +14,6 @@
 - **Diarize speakers in audio** (who spoke when) using **pyannote.audio** (Hugging Face pipeline) + Whisper segments.
 - **“Text diarization” (heuristics)** — a simple alternating / block labeling of lines or sentences (no ML), useful when you already have plain text.
 - Show **live logs** inside the app (including worker/tqdm output from diarization and transcription when enabled).
-- Display a clean **Info tab rendered from Markdown**
 
 ---
 ---
