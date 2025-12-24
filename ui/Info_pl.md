@@ -1,6 +1,7 @@
 ## {{APP_NAME}} – Artificial Intelligence Speech-To-Analysis-Translation Engine ({{APP_VERSION}})
 
 **Autor:** pawlict
+**pawlict@protom.me**
 
 <p align="center">
   <img src="assets/logo.png" alt="Logo" width="280" />
@@ -92,3 +93,4 @@ Zawsze dokumentuj:
 ### Pipeline pyannote (Hugging Face)
 Diaryzacja głosu używa repozytorium pipeline na Hugging Face.  
 **Użytkownik odpowiada za przestrzeganie licencji/warunków widocznych na karcie konkretnego repozytorium.**
+
