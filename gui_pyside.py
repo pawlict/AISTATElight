@@ -26,7 +26,7 @@ from ui.i18n import tr
 
 
 APP_NAME = "AI.S.T.A.T.E Light"
-APP_VERSION = "v 1.0.0"
+APP_VERSION = "v 1.1.0"
 
 
 class MainWindow(QMainWindow):
