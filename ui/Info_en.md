@@ -1,8 +1,8 @@
 ## {{APP_NAME}} – Artificial Intelligence Speech-To-Analysis-Translation Engine ({{APP_VERSION}})
 
 **Author:** pawlict
-EN (Contact / support)
-
+---
+(Contact / support)
 If you encounter bugs, technical issues, have improvement suggestions, or ideas for new features — please contact the author at: pawlict@proton.me
 <p align="center">
   <img src="assets/logo.png" alt="Logo" width="280" />
@@ -89,4 +89,5 @@ Always document:
 ### Pyannote diarization pipelines (Hugging Face)
 Voice diarization uses a Hugging Face pipeline repository.  
 **You are responsible for following the license/terms shown on the model card of the specific repository you use.**
+
 
