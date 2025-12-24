@@ -64,7 +64,7 @@ You typically need:
 3. Acceptance of the model’s terms (some models are gated)
 
 > **Token storage:** the app stores settings (including HF token) in:  
-> `~/.config/AISTATElight/settings.json` (field: `hf_token`).
+> `~/.backend/.aistate/settings.json` (field: `hf_token`).
 
 ---
 
