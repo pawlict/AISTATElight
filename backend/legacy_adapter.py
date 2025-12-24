@@ -430,11 +430,21 @@ def diarize_voice_whisper_pyannote(
 ):
     """Whisper transcription + pyannote speaker diarization (worker-safe).
 
+    IMPORTANT (stability):
+      - We **do not** pass file paths directly into pyannote when possible.
+        On some systems pyannote >= 4.x may try to use torchcodec/AudioDecoder
+        for metadata/decoding and crash with:
+          NameError: name 'AudioDecoder' is not defined
+      - Instead we convert the input to PCM WAV (16kHz mono) and feed an
+        in-memory waveform dict: {"waveform": Tensor, "sample_rate": int}.
+
     Compatible with:
       - pyannote.audio < 4.x: Pipeline(...) returns Annotation (has itertracks)
       - pyannote.audio >= 4.x: Pipeline(...) returns DiarizeOutput with
         .exclusive_speaker_diarization / .speaker_diarization (both are Annotation)
     """
+    import os
+
     if log_cb:
         log_cb("Start: Whisper + pyannote")
         log_cb(f"HF token: {'OK' if hf_token else 'MISSING'} (hf_...)")
@@ -449,8 +459,14 @@ def diarize_voice_whisper_pyannote(
     lang = None if language == "auto" else language
     if log_cb:
         log_cb("Whisper: transcribe with segments")
+    if progress_cb:
+        progress_cb(5)
+
     wres = wmodel.transcribe(audio_path, language=lang, verbose=False)
     segments = wres.get("segments") or []
+
+    if progress_cb:
+        progress_cb(35)
 
     # --- pyannote ---
     from pyannote.audio import Pipeline
@@ -462,26 +478,44 @@ def diarize_voice_whisper_pyannote(
         log_cb("pyannote: load speaker-diarization pipeline (auto-download if missing)")
     pipeline = _load_pyannote_pipeline(Pipeline, hf_token, log_cb)
 
-    if log_cb:
-        log_cb("pyannote: diarizing file")
-    try:
-        diar = pipeline(audio_path)
-    except ValueError as e:
-        msg = str(e)
-        if ("resulted in" in msg) and ("samples instead of the expected" in msg):
-            if log_cb:
-                log_cb("pyannote: crop/sample mismatch detected -> retry on PCM WAV")
-            wav_path = _convert_to_pcm_wav_16k_mono(audio_path, log_cb=log_cb)
-            try:
-                diar = pipeline(wav_path)
-            finally:
-                try:
-                    os.unlink(wav_path)
-                except Exception:
-                    pass
-        else:
-            raise
+    if progress_cb:
+        progress_cb(45)
 
+    if log_cb:
+        log_cb("pyannote: diarizing file (PCM WAV -> in-memory waveform)")
+
+    # Always stabilize input to avoid sample-count mismatch and pyannote internal decoding.
+    wav_path = _convert_to_pcm_wav_16k_mono(audio_path, log_cb=log_cb)
+    try:
+        try:
+            import torch
+            import soundfile as sf
+        except Exception as e:
+            raise RuntimeError(
+                "Missing deps for robust pyannote audio loading. "
+                "Install: pip install soundfile (and ensure torch is installed)."
+            ) from e
+
+        audio_np, sr = sf.read(wav_path, dtype="float32", always_2d=True)  # (time, channels)
+        waveform = torch.from_numpy(audio_np.T)  # -> (channels, time)
+
+        file_dict = {
+            "waveform": waveform,
+            "sample_rate": int(sr),
+            "uri": os.path.basename(audio_path),
+            "duration": float(waveform.shape[1]) / float(sr) if int(sr) > 0 else None,
+        }
+
+        diar = pipeline(file_dict)
+
+    finally:
+        try:
+            os.unlink(wav_path)
+        except Exception:
+            pass
+
+    if progress_cb:
+        progress_cb(80)
 
     def get_annotation(diar_output):
         if hasattr(diar_output, "exclusive_speaker_diarization"):
@@ -530,9 +564,13 @@ def diarize_voice_whisper_pyannote(
 
         out_lines.append(f"[{s0:.2f}-{s1:.2f}] {best_spk}: {txt}")
 
+    # Join diarized segments into final text.
     text = "\n".join(out_lines) if out_lines else (wres.get("text") or "").strip()
-    return {"kind": "diarized_voice", "text": text, "ok": True}
 
+    if progress_cb:
+        progress_cb(100)
+
+    return {"kind": "diarized_voice", "text": text, "ok": True}
 
 
 def diarize_voice_whisper_pyannote_safe(
