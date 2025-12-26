@@ -9,19 +9,6 @@ If you encounter bugs, technical issues, have improvement suggestions, or ideas 
 </p>
 
 ---
-
-## License (MIT) & Disclaimer (AS IS)
-
-This project is distributed under the **MIT License**, which permits use, copying, modification, merging, publishing, distribution, sublicensing, and/or selling copies of the software, provided that the copyright notice and license text are included.
-
-**Warranty disclaimer (“AS IS”):**  
-The software is provided *“as is”*, without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement.
-
-**Limitation of liability:**  
-In no event shall the author(s) or copyright holder(s) be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.
-
----
-
 ## What this app does
 
 ### Speech-to-text (AI)
@@ -89,5 +76,42 @@ Always document:
 ### Pyannote diarization pipelines (Hugging Face)
 Voice diarization uses a Hugging Face pipeline repository.  
 **You are responsible for following the license/terms shown on the model card of the specific repository you use.**
+
+---
+---
+
+## License and disclaimer
+
+This project is released under:  
+**AISTATElight GitHub-Compatible No-Resale License v1.2 (Source-Available)**
+
+### ✅ Permissions
+You may:
+- use the software for **personal, educational, and research** purposes, and for **internal commercial use**,
+- **modify** the code for your own internal needs.
+
+### ❌ Restrictions
+Without prior **written permission** from the author, you may **not**:
+- resell or **commercially redistribute** the software (source code or binaries),
+- distribute **binaries/installers/containers** or any packaged builds,
+- publish modified versions outside GitHub’s allowed fork/view mechanisms, to the extent GitHub permits those actions under its Terms.
+
+### © Attribution (required)
+You must retain attribution to the author (**pawlict**) and keep the license text.
+If used commercially within an organization, attribution must remain visible in the app’s **About/Info** section (or equivalent documentation).
+
+### “AS IS” — no warranty
+The software is provided **“AS IS”**, without warranty of any kind, express or implied, including but not limited to
+merchantability, fitness for a particular purpose, and noninfringement.
+
+### Limitation of liability
+In no event shall the author or copyright holder be liable for any claim, damages, or other liability, whether in an action
+of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.
+
+### Third-party licenses
+This project depends on third-party components (e.g., Whisper, pyannote.audio, PySide6/Qt, FFmpeg), each under its own license.
+See: **THIRD_PARTY_NOTICES.md**.
+
+---
 
 
