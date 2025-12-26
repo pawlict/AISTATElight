@@ -1,11 +1,13 @@
 ## AISTATE Light — *Artificial Intelligence Speech‑To‑Analysis‑Translation Engine*
-![Version](https://img.shields.io/badge/version-v1-blue)
+![Version](https://img.shields.io/badge/version-v2.0-blue)
 ![Python](https://img.shields.io/badge/python-3.8+-yellow)
-![License](https://img.shields.io/badge/license-MIT-green)
 
 ---
 
 **AISTATE Light** is a transcription and diarization tool.  
+#### Feedback / Support
+
+If you have any issues, suggestions, or feature requests, please contact me at: **pawlict@proton.me**
 
 ---
 
@@ -14,6 +16,14 @@
 - **Diarize speakers in audio** (who spoke when) using **pyannote.audio** (Hugging Face pipeline) + Whisper segments.
 - **“Text diarization” (heuristics)** — a simple alternating / block labeling of lines or sentences (no ML), useful when you already have plain text.
 - Show **live logs** inside the app (including worker/tqdm output from diarization and transcription when enabled).
+## ✨ Updates v 2.0: Segment playback + transcription/diarization corrections
+
+This update introduces a **segment-level review workflow**:
+
+- **Segment playback (start–end):** you can play the audio for a selected segment directly in the app.
+- **“Segment correction” panel:** edit the **transcription text**, adjust **diarization** (speaker assignment), and rename the **speaker label** for that segment.
+- **Safe saving (no block merging):** saving edits preserves segment boundaries, preventing the previous issue where edited text could merge into the next segment and break playback mapping in subsequent edits.
+- **Improved UX:** corrections are applied immediately to the segment list / editor without re-running the whole pipeline.
 
 ---
 ---
@@ -77,7 +87,7 @@ You typically need:
 3. Acceptance of the model’s terms (some models are gated)
 
 > **Token storage:** the app stores settings (including HF token) in:  
-> `~/.config/AISTATElight/settings.json` (field: `hf_token`).
+> `~/.AISTATElight/backend/settings.json` (field: `hf_token`).
 
 ---
 
@@ -102,7 +112,6 @@ This is **not** ML diarization — it just labels text units (lines/sentences) a
 - `backend/settings_store.py` — settings load/save (stores HF token)
 - `ui/theme.py` — themes / palettes
 - `ui/Info_pl.md`, `ui/Info_en.md` — Info tab content (Markdown)
-- `ui/assets/logo.png` — logo used by Info tab and splash screen
 
 ---
 
