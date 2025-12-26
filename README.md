@@ -116,6 +116,13 @@ This is **not** ML diarization — it just labels text units (lines/sentences) a
 ---
 
 ## License
+This project is released under the **AISTATElight GitHub-Compatible No-Resale License v1.2 (Source-Available)**:
 
-MIT License (AS IS).  
-See the Info tab (Markdown) and/or `LICENSE` if present in the repository.
+- ✅ Personal, educational, research, and **internal commercial use** allowed
+- ✅ **Modifications allowed** for internal use
+- ❌ No resale / no commercial redistribution
+- ❌ No distribution of binaries/installers without permission
+- ✅ Provided **“AS IS”** (no warranty)
+
+Third-party license notices: see **THIRD_PARTY_NOTICES.md**.
+
