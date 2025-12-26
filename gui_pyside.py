@@ -29,7 +29,7 @@ from ui.segments import SegmentTextEdit, SegmentEditDialog, SpeakerNamesPanel, S
 
 
 APP_NAME = "AI.S.T.A.T.E Light"
-APP_VERSION = "v 1.0.0"
+APP_VERSION = "v 2.0"
 
 
 class MainWindow(QMainWindow):
