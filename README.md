@@ -32,7 +32,7 @@ This update introduces a **segment-level review workflow**:
 ### System (Linux)
 Install FFmpeg (used to convert audio to stable PCM WAV when needed):
 ```bash
-sudo apt update
+sudo apt update -y
 sudo apt install -y \
   python3 python3-venv python3-pip git \
   ffmpeg \
