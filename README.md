@@ -15,7 +15,13 @@
 - **“Text diarization” (heuristics)** — a simple alternating / block labeling of lines or sentences (no ML), useful when you already have plain text.
 - Show **live logs** inside the app (including worker/tqdm output from diarization and transcription when enabled).
 
----
+## 🆕 New v 2.0.0 : segment playback + transcription/diarization correction
+
+This release adds **segment playback** and a **“Segment correction”** panel that lets you:
+- play the audio for a selected segment (start–end),
+- edit the transcription text,
+- adjust diarization (speaker assignment / speaker label),
+- save edits while preserving segment boundaries.
 ---
 
 ## Requirements
