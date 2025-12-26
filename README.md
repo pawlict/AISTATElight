@@ -22,8 +22,21 @@
 ### System (Linux)
 Install FFmpeg (used to convert audio to stable PCM WAV when needed):
 ```bash
-sudo apt-get update
-sudo apt install -y ffmpeg libsndfile1
+sudo apt update
+sudo apt install -y \
+  python3 python3-venv python3-pip git \
+  ffmpeg \
+  libsndfile1 \
+  gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
+  gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly \
+  gstreamer1.0-libav
+  libgl1 \
+  libxkbcommon-x11-0 \
+  libxcb-cursor0 \
+  libxcb-icccm4 libxcb-image0 libxcb-keysyms1 \
+  libxcb-randr0 libxcb-render-util0 libxcb-xinerama0 libxcb-xinput0
+
+
 ```
 ### Python
 Recommended: **Python 3.11+** (project is known to run on newer versions too, but PyTorch wheels may be easiest on 3.11).
