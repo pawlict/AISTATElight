@@ -7,6 +7,8 @@
 
 **AISTATE Light** is a transcription and diarization tool.  
 
+#### Contact / support
+#### If you encounter bugs, technical issues, have improvement suggestions, or ideas for new features — please contact the author at: [pawlict@proton.me](mailto:pawlict@proton.me)
 ---
 
 ## ✨ Main functionalities
@@ -15,7 +17,7 @@
 - **“Text diarization” (heuristics)** — a simple alternating / block labeling of lines or sentences (no ML), useful when you already have plain text.
 - Show **live logs** inside the app (including worker/tqdm output from diarization and transcription when enabled).
 
-## 🆕 New v 2.0.0 : segment playback + transcription/diarization correction
+### 🆕 New v 2.0.0 : segment playback + transcription/diarization correction
 
 This release adds **segment playback** and a **“Segment correction”** panel that lets you:
 - play the audio for a selected segment (start–end),
