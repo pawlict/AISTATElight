@@ -4,13 +4,15 @@ import datetime
 import os
 from typing import Optional
 
-from PySide6.QtCore import Qt, Slot, QUrl
+from PySide6.QtCore import Qt, Slot, QUrl, QTimer
 from PySide6.QtWidgets import (
     QWidget, QMainWindow, QFileDialog, QMessageBox,
     QVBoxLayout, QHBoxLayout, QSplitter, QLabel, QPushButton,
     QTextEdit, QTextBrowser, QComboBox, QSpinBox, QStatusBar, QMenuBar, QMenu,
-    QTabWidget, QGroupBox, QFormLayout, QLineEdit
+    QTabWidget, QGroupBox, QFormLayout, QLineEdit, QDialog
 )
+
+from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 
 from backend.tasks import BackgroundTask, TaskRunner
 from backend.legacy_adapter import (
@@ -23,10 +25,11 @@ from backend.settings_store import load_settings, save_settings
 
 from ui.theme import THEMES, apply_theme
 from ui.i18n import tr
+from ui.segments import SegmentTextEdit, SegmentEditDialog, SpeakerNamesPanel, Segment, parse_segment_line
 
 
 APP_NAME = "AI.S.T.A.T.E Light"
-APP_VERSION = "v 1.1.0"
+APP_VERSION = "v 1.0.0"
 
 
 class MainWindow(QMainWindow):
@@ -41,9 +44,121 @@ class MainWindow(QMainWindow):
         self.audio_path: Optional[str] = None
 
         self._build_ui()
+        self._init_audio_preview()
         self._apply_settings()
         self._update_status()
         self.log("Application started.")
+
+
+    # ---------- Audio preview / segment playback (hover + popup editor) ----------
+    def _init_audio_preview(self) -> None:
+        """Initialize a lightweight player used for hover-preview of segments."""
+        self.preview_player = QMediaPlayer(self)
+        self.preview_audio_output = QAudioOutput(self)
+        self.preview_player.setAudioOutput(self.preview_audio_output)
+
+        # Stop timer for hover preview
+        self._preview_stop_timer = QTimer(self)
+        self._preview_stop_timer.setSingleShot(True)
+        self._preview_stop_timer.timeout.connect(self.preview_player.stop)
+
+        # Debounce hover events (avoid accidental starts when moving mouse quickly)
+        self._hover_debounce = QTimer(self)
+        self._hover_debounce.setSingleShot(True)
+        self._hover_debounce.setInterval(180)
+        self._hover_debounce.timeout.connect(self._play_pending_hover)
+        self._pending_hover_seg: Segment | None = None
+
+        self._set_preview_source()
+
+    def _set_preview_source(self) -> None:
+        try:
+            if self.audio_path:
+                self.preview_player.setSource(QUrl.fromLocalFile(self.audio_path))
+            else:
+                self.preview_player.setSource(QUrl())
+        except Exception:
+            # If multimedia backend is missing, we keep UI running; user will see no preview.
+            pass
+
+    def _play_pending_hover(self) -> None:
+        seg = self._pending_hover_seg
+        self._pending_hover_seg = None
+        if not seg or not self.audio_path:
+            return
+
+        # Play a short preview (up to 2.5s) from the segment start
+        start_ms = int(max(0.0, seg.start_s) * 1000)
+        max_len_ms = 2500
+        seg_len_ms = int(max(0.0, (seg.end_s - seg.start_s)) * 1000)
+        play_len_ms = max(250, min(max_len_ms, seg_len_ms if seg_len_ms > 0 else max_len_ms))
+
+        try:
+            self.preview_player.setPosition(start_ms)
+            self.preview_player.play()
+            self._preview_stop_timer.start(play_len_ms)
+        except Exception:
+            pass
+
+    def _on_segment_hovered(self, seg: Segment | None, editor: SegmentTextEdit) -> None:
+        # SegmentTextEdit already highlights the hovered line.
+        if seg is None:
+            self._hover_debounce.stop()
+            self._pending_hover_seg = None
+            try:
+                self.preview_player.stop()
+            except Exception:
+                pass
+            return
+
+        if not self.audio_path:
+            return
+
+        self._pending_hover_seg = seg
+        self._hover_debounce.start()
+
+    def _on_segment_double_clicked(self, seg: Segment, editor: SegmentTextEdit) -> None:
+        if not self.audio_path:
+            QMessageBox.information(self, "Audio", "Najpierw wczytaj plik audio, aby odsłuchiwać fragmenty.")
+            return
+
+        block = editor.document().findBlockByNumber(seg.block_number)
+        current_line = block.text() if block.isValid() else ""
+
+        dlg = SegmentEditDialog(
+            parent=self,
+            audio_path=self.audio_path,
+            seg=seg,
+            current_line=current_line,
+            speaker_name_map=getattr(self, "speaker_name_map", {}),
+            t=self.t,
+        )
+        if dlg.exec() != QDialog.Accepted:
+            return
+        new_line = dlg.build_new_line()
+
+        editor.replace_block_text(seg.block_number, new_line)
+
+        try:
+            self.speaker_panel.refresh()
+        except Exception:
+            pass
+
+    def _on_speaker_mapping_applied(self, mapping: object) -> None:
+        """Keep a local copy of the last mapping (used by the popup meta label)."""
+        if not isinstance(mapping, dict):
+            return
+        if not hasattr(self, "speaker_name_map") or self.speaker_name_map is None:
+            self.speaker_name_map = {}
+        # store mapping (old -> new). This is mostly informational.
+        try:
+            self.speaker_name_map.update({str(k): str(v) for k, v in mapping.items()})
+        except Exception:
+            pass
+        try:
+            self.log(f"Speaker mapping applied: {mapping}")
+        except Exception:
+            pass
 
 
     def _render_info_markdown(self) -> None:
@@ -227,7 +342,7 @@ class MainWindow(QMainWindow):
         left = QWidget(self.home)
         left_layout = QVBoxLayout(left)
         self.lbl_input = QLabel(self.home)
-        self.input_text = QTextEdit(self.home)
+        self.input_text = SegmentTextEdit(self.home)
         left_layout.addWidget(self.lbl_input)
         left_layout.addWidget(self.input_text, 1)
         self.splitter_h.addWidget(left)
@@ -235,8 +350,15 @@ class MainWindow(QMainWindow):
         right = QWidget(self.home)
         right_layout = QVBoxLayout(right)
         self.lbl_output = QLabel(self.home)
-        self.output_text = QTextEdit(self.home)
+        self.output_text = SegmentTextEdit(self.home)
         self.output_text.setReadOnly(True)
+
+        # Segment hover preview + popup editor
+        self.input_text.segmentHovered.connect(lambda seg: self._on_segment_hovered(seg, self.input_text))
+        self.output_text.segmentHovered.connect(lambda seg: self._on_segment_hovered(seg, self.output_text))
+        self.input_text.segmentDoubleClicked.connect(lambda seg: self._on_segment_double_clicked(seg, self.input_text))
+        self.output_text.segmentDoubleClicked.connect(lambda seg: self._on_segment_double_clicked(seg, self.output_text))
+
         right_layout.addWidget(self.lbl_output)
         right_layout.addWidget(self.output_text, 1)
         self.splitter_h.addWidget(right)
@@ -246,6 +368,13 @@ class MainWindow(QMainWindow):
         self.splitter_h.setSizes([600, 650])
 
         self.splitter_v.addWidget(self.splitter_h)
+
+        # Speaker naming / renaming (shared for transcription + diarization)
+        self.speaker_name_map: dict[str, str] = {}
+        self.speaker_panel = SpeakerNamesPanel(self.home, self.input_text, self.output_text, t=self.t)
+        self.speaker_panel.mappingApplied.connect(self._on_speaker_mapping_applied)
+        self.splitter_v.addWidget(self.speaker_panel)
+
 
         # Logs panel + buttons
         logs_panel = QWidget(self.home)
@@ -271,7 +400,7 @@ class MainWindow(QMainWindow):
         self.splitter_v.addWidget(logs_panel)
         self.splitter_v.setStretchFactor(0, 4)
         self.splitter_v.setStretchFactor(1, 1)
-        self.splitter_v.setSizes([620, 180])
+        self.splitter_v.setSizes([540, 120, 200])
 
         home_layout.addWidget(self.splitter_v, 1)
 
@@ -367,6 +496,12 @@ class MainWindow(QMainWindow):
         self.gb_settings.setTitle(self.t("tab_settings"))
         self.ui_lang_combo.setItemText(0, self.t("ui_pl"))
         self.ui_lang_combo.setItemText(1, self.t("ui_en"))
+
+        # Speaker panel (speaker names) uses its own widgets — retranslate them too
+        try:
+            self.speaker_panel.set_translator(self.t)
+        except Exception:
+            pass
 
         # Info
         self._render_info_markdown()
@@ -540,6 +675,7 @@ class MainWindow(QMainWindow):
             return
         self.audio_path = path
         self.lbl_audio.setText(path)
+        self._set_preview_source()
         self.log(f"Audio loaded: {path}")
 
     @Slot()
@@ -578,6 +714,10 @@ class MainWindow(QMainWindow):
             return
         text_ts = result.get("text_ts") or result.get("text", "")
         self.input_text.setPlainText(text_ts)
+        try:
+            self.speaker_panel.refresh()
+        except Exception:
+            pass
         self.log("Transcription finished -> pasted into input pane.")
 
     @Slot()
@@ -609,6 +749,10 @@ class MainWindow(QMainWindow):
             return
         text = result.get("text", "")
         self.output_text.setPlainText(text)
+        try:
+            self.speaker_panel.refresh()
+        except Exception:
+            pass
         self.log("Text diarization finished -> pasted into output pane.")
 
     # New: voice diarization (pyannote)
@@ -652,6 +796,10 @@ class MainWindow(QMainWindow):
             return
         text = result.get("text", "") or ""
         self.output_text.setPlainText(text)
+        try:
+            self.speaker_panel.refresh()
+        except Exception:
+            pass
         self.log("Voice diarization completed -> pasted into output pane.")
 
     # ---------- Task events ----------

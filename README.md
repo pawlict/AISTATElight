@@ -1,5 +1,5 @@
 ## AISTATE Light — *Artificial Intelligence Speech‑To‑Analysis‑Translation Engine*
-![Version](https://img.shields.io/badge/version-v1.1.0-blue)
+![Version](https://img.shields.io/badge/version-v1-blue)
 ![Python](https://img.shields.io/badge/python-3.8+-yellow)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -7,8 +7,6 @@
 
 **AISTATE Light** is a transcription and diarization tool.  
 
-#### Contact / support
-- If you encounter bugs, technical issues, have improvement suggestions, or ideas for new features — please contact the author at: [pawlict@proton.me](mailto:pawlict@proton.me)
 ---
 
 ## ✨ Main functionalities
@@ -17,33 +15,15 @@
 - **“Text diarization” (heuristics)** — a simple alternating / block labeling of lines or sentences (no ML), useful when you already have plain text.
 - Show **live logs** inside the app (including worker/tqdm output from diarization and transcription when enabled).
 
-### 🆕 New v 2.0.0 : segment playback + transcription/diarization correction
-
-This release adds **segment playback** and a **“Segment correction”** panel that lets you:
-- play the audio for a selected segment (start–end),
-- edit the transcription text,
-- adjust diarization (speaker assignment / speaker label),
-- save edits while preserving segment boundaries.
+---
 ---
 
 ## Requirements
 ### System (Linux)
 Install FFmpeg (used to convert audio to stable PCM WAV when needed):
 ```bash
-sudo apt update
-sudo apt install -y \
-  python3 python3-venv python3-pip git \
-  ffmpeg \
-  libsndfile1 \
-  gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
-  gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly \
-  gstreamer1.0-libav
-  libgl1 \
-  libxkbcommon-x11-0 \
-  libxcb-cursor0 \
-  libxcb-icccm4 libxcb-image0 libxcb-keysyms1 \
-  libxcb-randr0 libxcb-render-util0 libxcb-xinerama0 libxcb-xinput0
-
+sudo apt-get update
+sudo apt install -y ffmpeg libsndfile1
 ```
 ### Python
 Recommended: **Python 3.11+** (project is known to run on newer versions too, but PyTorch wheels may be easiest on 3.11).
@@ -84,7 +64,7 @@ You typically need:
 3. Acceptance of the model’s terms (some models are gated)
 
 > **Token storage:** the app stores settings (including HF token) in:  
-> `~/.backend/.aistate/settings.json` (field: `hf_token`).
+> `~/.config/AISTATElight/settings.json` (field: `hf_token`).
 
 ---
 
@@ -109,6 +89,7 @@ This is **not** ML diarization — it just labels text units (lines/sentences) a
 - `backend/settings_store.py` — settings load/save (stores HF token)
 - `ui/theme.py` — themes / palettes
 - `ui/Info_pl.md`, `ui/Info_en.md` — Info tab content (Markdown)
+- `ui/assets/logo.png` — logo used by Info tab and splash screen
 
 ---
 
