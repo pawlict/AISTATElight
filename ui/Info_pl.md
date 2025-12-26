@@ -10,23 +10,6 @@ W razie błędów, problemów technicznych, sugestii ulepszeń lub pomysłów na
 
 ---
 
-## Licencja (MIT) i zastrzeżenie (AS IS)
-
-Ten projekt jest udostępniany na licencji **MIT**, która pozwala na używanie, kopiowanie, modyfikowanie, łączenie,
-publikowanie, dystrybuowanie, sublicencjonowanie i/lub sprzedaż kopii oprogramowania, pod warunkiem dołączenia informacji
-o prawach autorskich oraz treści licencji.
-
-**Wyłączenie gwarancji („AS IS”):**  
-Oprogramowanie jest dostarczane *„tak jak jest”*, bez jakiejkolwiek gwarancji — wyraźnej ani dorozumianej — w tym m.in.
-bez gwarancji przydatności handlowej, przydatności do określonego celu oraz nienaruszania praw osób trzecich.
-
-**Ograniczenie odpowiedzialności:**  
-W żadnym wypadku autor(zy) ani właściciel(e) praw autorskich nie ponoszą odpowiedzialności za roszczenia, szkody
-ani inną odpowiedzialność (umowną, deliktową lub inną), wynikającą z używania oprogramowania albo związaną z nim
-w jakikolwiek sposób.
-
----
-
 ## Co robi aplikacja
 
 ### Transkrypcja audio → tekst (AI)
@@ -95,5 +78,41 @@ Zawsze dokumentuj:
 Diaryzacja głosu używa repozytorium pipeline na Hugging Face.  
 **Użytkownik odpowiada za przestrzeganie licencji/warunków widocznych na karcie konkretnego repozytorium.**
 
+---
+---
+
+## Licencja i zastrzeżenia
+
+Ten projekt jest udostępniany na licencji:  
+**AISTATElight GitHub-Compatible No-Resale License v1.2 (Source-Available)**
+
+### ✅ Uprawnienia
+Użytkownik może:
+- korzystać z oprogramowania w celach **prywatnych, edukacyjnych, badawczych** oraz **komercyjnych na potrzeby wewnętrzne**,
+- **modyfikować** kod na własne potrzeby (wewnętrznie).
+
+### ❌ Ograniczenia
+Bez uprzedniej **pisemnej zgody autora** użytkownik **nie może**:
+- odsprzedawać ani prowadzić **komercyjnej redystrybucji** oprogramowania (kod źródłowy lub wersje binarne),
+- dystrybuować **binarek/instalatorów/kontenerów** ani innych paczek wdrożeniowych,
+- publikować zmodyfikowanych wersji poza mechanizmami platformy GitHub (fork/view), w zakresie w jakim GitHub dopuszcza to regulaminem.
+
+### © Wzmianka o autorze (wymagana)
+Wymagane jest zachowanie informacji o autorze (**pawlict**) oraz treści licencji.
+W przypadku użycia komercyjnego w organizacji atrybucja powinna pozostać widoczna w sekcji **About/Info** (lub równoważnej dokumentacji).
+
+### „AS IS” — wyłączenie gwarancji
+Oprogramowanie jest dostarczane **„TAK JAK JEST”**, bez jakichkolwiek gwarancji (wyraźnych ani dorozumianych),
+w tym m.in. bez gwarancji przydatności handlowej, przydatności do określonego celu oraz nienaruszania praw osób trzecich.
+
+### Ograniczenie odpowiedzialności
+W żadnym wypadku autor ani właściciel praw autorskich nie ponosi odpowiedzialności za roszczenia, szkody ani inną odpowiedzialność
+wynikającą z używania oprogramowania lub związaną z nim w jakikolwiek sposób.
+
+### Licencje zależności (Third-party)
+To oprogramowanie korzysta z bibliotek i narzędzi stron trzecich (np. Whisper, pyannote.audio, PySide6/Qt, FFmpeg),
+które mają własne licencje. Szczegóły: **THIRD_PARTY_NOTICES.md**.
+
+---
 
 
