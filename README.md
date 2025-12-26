@@ -8,7 +8,7 @@
 **AISTATE Light** is a transcription and diarization tool.  
 
 #### Contact / support
-#### If you encounter bugs, technical issues, have improvement suggestions, or ideas for new features — please contact the author at: [pawlict@proton.me](mailto:pawlict@proton.me)
+- If you encounter bugs, technical issues, have improvement suggestions, or ideas for new features — please contact the author at: [pawlict@proton.me](mailto:pawlict@proton.me)
 ---
 
 ## ✨ Main functionalities
