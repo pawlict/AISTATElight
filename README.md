@@ -16,16 +16,7 @@ If you have any issues, suggestions, or feature requests, please contact me at: 
 - **Diarize speakers in audio** (who spoke when) using **pyannote.audio** (Hugging Face pipeline) + Whisper segments.
 - **“Text diarization” (heuristics)** — a simple alternating / block labeling of lines or sentences (no ML), useful when you already have plain text.
 - Show **live logs** inside the app (including worker/tqdm output from diarization and transcription when enabled).
-## ✨ Updates v 2.0: Segment playback + transcription/diarization corrections
 
-This update introduces a **segment-level review workflow**:
-
-- **Segment playback (start–end):** you can play the audio for a selected segment directly in the app.
-- **“Segment correction” panel:** edit the **transcription text**, adjust **diarization** (speaker assignment), and rename the **speaker label** for that segment.
-- **Safe saving (no block merging):** saving edits preserves segment boundaries, preventing the previous issue where edited text could merge into the next segment and break playback mapping in subsequent edits.
-- **Improved UX:** corrections are applied immediately to the segment list / editor without re-running the whole pipeline.
-
----
 ---
 
 ## Requirements
@@ -125,4 +116,17 @@ This project is released under the **AISTATElight License v1.2 (Source-Available
 - ✅ Provided **“AS IS”** (no warranty)
 
 Third-party license notices: see **THIRD_PARTY_NOTICES.md**.
+---
+---
+## Changes (v 2.1)
 
+- Fixed a bug where **global speaker renaming** broke diarization UI features: hover highlight, hover audio playback, and per-speaker background colors.
+
+## Changes (v 2.0) Segment playback + transcription/diarization corrections
+
+This update introduces a **segment-level review workflow**:
+
+- **Segment playback (start–end):** you can play the audio for a selected segment directly in the app.
+- **“Segment correction” panel:** edit the **transcription text**, adjust **diarization** (speaker assignment), and rename the **speaker label** for that segment.
+- **Safe saving (no block merging):** saving edits preserves segment boundaries, preventing the previous issue where edited text could merge into the next segment and break playback mapping in subsequent edits.
+- **Improved UX:** corrections are applied immediately to the segment list / editor without re-running the whole pipeline.
