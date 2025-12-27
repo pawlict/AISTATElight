@@ -116,7 +116,7 @@ This is **not** ML diarization — it just labels text units (lines/sentences) a
 ---
 
 ## License
-This project is released under the **AISTATElight GitHub-Compatible No-Resale License v1.2 (Source-Available)**:Licence.md
+This project is released under the **AISTATElight License v1.2 (Source-Available)**: **Licence.md*
 
 - ✅ Personal, educational, research, and **internal commercial use** allowed
 - ✅ **Modifications allowed** for internal use
