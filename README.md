@@ -1,5 +1,5 @@
 ## AISTATE Light — *Artificial Intelligence Speech‑To‑Analysis‑Translation Engine*
-![Version](https://img.shields.io/badge/version-v2.2-green)
+![Version](https://img.shields.io/badge/version-v2.2.1-green)
 ![Python](https://img.shields.io/badge/python-3.8+-yellow)
 
 ---
@@ -129,6 +129,29 @@ This project is released under the **AISTATElight License v1.2 (Source-Available
 Third-party license notices: see **THIRD_PARTY_NOTICES.md**.
 ---
 ---
+## Changes (v 2.2.1) Refactor: Improve code quality and maintainability in gui_pyside.py
+
+### Security Improvements
+- Replace string path operations with `pathlib.Path` for safer file handling
+- Add comprehensive exception handling with detailed error logging
+- Implement proper input validation and type checking
+
+### Code Structure
+- Extract UI building logic into focused methods (`_build_audio_group()`, `_build_whisper_group()`, etc.)
+- Add class constants for magic numbers (timeouts, sizes, file formats)
+- Improve method organization with clear separation of concerns
+
+### Error Handling
+- Enhanced error logging with context information
+- Consistent try-catch patterns across all file operations
+- Safe resource cleanup in audio preview system
+
+### Code Quality
+- Add comprehensive docstrings to all methods
+- Complete type hints throughout the class
+- Eliminate code duplication (DRY principle)
+- Improve variable naming and readability
+
 ## Changes (v 2.2)
 - Added diarization report generation: TXT / PDF / HTML (GUI export, multi-format selection, optional logs, editable output filename before saving).
 
