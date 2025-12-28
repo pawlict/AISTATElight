@@ -36,8 +36,6 @@ sudo apt install -y \
   libxcb-cursor0 \
   libxcb-icccm4 libxcb-image0 libxcb-keysyms1 \
   libxcb-randr0 libxcb-render-util0 libxcb-xinerama0 libxcb-xinput0
-
-
 ```
 ### Python
 Recommended: **Python 3.11+** (project is known to run on newer versions too, but PyTorch wheels may be easiest on 3.11).
