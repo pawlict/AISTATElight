@@ -93,17 +93,27 @@ It is implemented in:
 This is **not** ML diarization — it just labels text units (lines/sentences) as `SPK1`, `SPK2`, etc.
 
 ---
-
 ## Project structure (important files)
 
-- `AISTATElight.py` — application entry point (+ splash screen)
-- `gui_pyside.py` — main window UI (tabs, actions, logging)
-- `backend/legacy_adapter.py` — Whisper transcription + pyannote diarization + helper utilities
-- `backend/voice_worker.py` — worker process for diarization (keeps GUI stable)
-- `backend/transcribe_worker.py` — optional worker process for Whisper logs (if enabled)
-- `backend/settings_store.py` — settings load/save (stores HF token)
-- `ui/theme.py` — themes / palettes
-- `ui/Info_pl.md`, `ui/Info_en.md` — Info tab content (Markdown)
+- **AISTATElight.py** — application entry point
+- **gui_pyside.py** — main window UI (tabs, actions, logging, report export)
+- **backend/legacy_adapter.py** — Whisper transcription + pyannote diarization + helper utilities 
+- **backend/voice_worker.py** — worker process for diarization 
+- **backend/transcribe_worker.py** — optional worker process for Whisper logs 
+- **backend/settings.py** — app metadata (name/version/author) + default config
+- **backend/settings_store.py** — settings load/save (stores HF token)
+
+- **ui/report_dialog.py** — report export dialog (TXT/PDF/HTML + include logs + output filename)
+- **ui/theme.py** — themes / palettes
+- **ui/Info_pl.md, ui/Info_en.md** — Info tab content (Markdown)
+
+- **generators/txt_report.py** — TXT report generator
+- **generators/pdf_report.py** — PDF report generator (ReportLab + Unicode fonts)
+- **generators/html_report.py** — HTML report generator (styled, speaker-colored timestamps)
+
+- **assets/fonts/** — bundled fonts for PDF Unicode support (e.g., DejaVuSans*)
+- **THIRD_PARTY_NOTICES(.md)** — third-party licenses / notices
+- **Licence.md** — AISTATElight License v1.2 (Source-Available)
 
 ---
 
