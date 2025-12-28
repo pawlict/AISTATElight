@@ -1,5 +1,5 @@
 ## AISTATE Light — *Artificial Intelligence Speech‑To‑Analysis‑Translation Engine*
-![Version](https://img.shields.io/badge/version-v2.1-blue)
+![Version](https://img.shields.io/badge/version-v2.2-green)
 ![Python](https://img.shields.io/badge/python-3.8+-yellow)
 
 ---
