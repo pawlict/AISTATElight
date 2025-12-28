@@ -1,5 +1,5 @@
 ## AISTATE Light — *Artificial Intelligence Speech‑To‑Analysis‑Translation Engine*
-![Version](https://img.shields.io/badge/version-v2.1-blue)
+![Version](https://img.shields.io/badge/version-v2.2-blue)
 ![Python](https://img.shields.io/badge/python-3.8+-yellow)
 
 ---
@@ -118,6 +118,9 @@ This project is released under the **AISTATElight License v1.2 (Source-Available
 Third-party license notices: see **THIRD_PARTY_NOTICES.md**.
 ---
 ---
+## Changes (v 2.2)
+- Added diarization report generation: TXT / PDF / HTML (GUI export, multi-format selection, optional logs).
+
 ## Changes (v 2.1)
 
 - Fixed a bug where **global speaker renaming** broke diarization UI features: hover highlight, hover audio playback, and per-speaker background colors.
