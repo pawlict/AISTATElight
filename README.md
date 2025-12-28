@@ -129,7 +129,7 @@ This project is released under the **AISTATElight License v1.2 (Source-Available
 Third-party license notices: see **THIRD_PARTY_NOTICES.md**.
 ---
 ---
-## Changes (v 2.2.1) Refactor: Improve code quality and maintainability in gui_pyside.py
+## Changes (v 2.2.1) Refactor: gui_pyside.py
 
 ### Security Improvements
 - Replace string path operations with `pathlib.Path` for safer file handling
