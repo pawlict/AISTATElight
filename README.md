@@ -116,6 +116,9 @@ This project is released under the **AISTATElight License v1.2 (Source-Available
 Third-party license notices: see **THIRD_PARTY_NOTICES.md**.
 ---
 ---
+## Changes (v 2.2)
+- Added diarization report generation: TXT / PDF / HTML (GUI export, multi-format selection, optional logs, editable output filename before saving).
+
 ## Changes (v 2.1)
 
 - Fixed a bug where **global speaker renaming** broke diarization UI features: hover highlight, hover audio playback, and per-speaker background colors.
