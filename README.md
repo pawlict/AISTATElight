@@ -45,6 +45,9 @@ Recommended: **Python 3.11+** (project is known to run on newer versions too, bu
 - Voice diarization requires an HF token. Paste the token in the Settings tab
 ---
 ### Program installation
+You can keep projects in `~/projects/`, but it’s not required.  
+The key point is to create the **venv inside the project directory** (e.g. `.AISTATElight`) so dependencies stay isolated from the system environment.
+
 ```bash
 mkdir -p ~/projects
 cd ~/projects
