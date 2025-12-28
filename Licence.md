@@ -1,4 +1,4 @@
-AISTATElight GitHub-Compatible No-Resale License v1.2 (Source-Available)
+AISTATE light License v1.2
 
 Copyright (c) 2025 pawlict
 
