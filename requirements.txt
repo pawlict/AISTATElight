@@ -1,0 +1,23 @@
+# Core GUI
+PySide6>=6.6,<7.0
+
+# Speech-to-text (Whisper)
+openai-whisper>=20231117
+
+# Speaker diarization (Hugging Face)
+pyannote.audio==4.0.2
+huggingface_hub>=0.36.0,<1.0
+
+# PyTorch stack (required by pyannote)
+torch>=2.2
+torchaudio>=2.2
+
+# Audio I/O
+soundfile>=0.12.1
+
+# Utilities
+numpy>=1.26
+tqdm>=4.66
+
+# Reports
+reportlab>=4.0
