@@ -120,7 +120,7 @@ This is **not** ML diarization — it just labels text units (lines/sentences) a
 ## License
 This project is released under the **AISTATElight License v1.2 (Source-Available)**: **Licence.md**
 
-- ✅ Personal, educational, research, and **internal commercial use** allowed
+- ✅ Personal, educational, research, court experts and **internal commercial use** allowed
 - ✅ **Modifications allowed** for internal use
 - ❌ No resale / no commercial redistribution
 - ❌ No distribution of binaries/installers without permission
