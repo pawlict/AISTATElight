@@ -4,7 +4,7 @@ from dataclasses import dataclass
 # ====== App identity (used by UI + reports) ======
 # NOTE: Name/version are intentionally sourced from this file.
 APP_NAME: str = "AISTATElight"
-APP_VERSION: str = "v2.2"
+APP_VERSION: str = "v2.2.1"
 AUTHOR_EMAIL: str = "pawlict@proton.me"
 AUTHOR_NAME: str = "pawlict"
 
