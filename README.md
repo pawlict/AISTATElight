@@ -103,9 +103,9 @@ This is **not** ML diarization — it just labels text units (lines/sentences) a
 - **backend/settings.py** — app metadata (name/version/author) + default config
 - **backend/settings_store.py** — settings load/save (stores HF token)
 
-- **ui/report_dialog.py** — report export dialog (TXT/PDF/HTML + include logs + output filename)
+- **ui/report_dialog.py** — report export dialog (TXT/PDF/HTML + include logs)
 - **ui/theme.py** — themes / palettes
-- **ui/Info_pl.md, ui/Info_en.md** — Info tab content (Markdown)
+- **ui/Info_pl.md, ui/Info_en.md** — Info tab content
 
 - **generators/txt_report.py** — TXT report generator
 - **generators/pdf_report.py** — PDF report generator (ReportLab + Unicode fonts)
