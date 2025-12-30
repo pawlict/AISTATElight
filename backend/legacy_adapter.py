@@ -215,6 +215,10 @@ def whisper_transcribe_safe(
     if log_cb:
         log_cb("whisper(worker): starting separate process…")
 
+    # NOTE: We must continuously drain BOTH stderr and stdout.
+    # Otherwise, for long recordings the final JSON on stdout can exceed the OS pipe buffer
+    # and the worker will block on write, making the GUI think the transcription "finished"
+    # (progress=100%, last stderr lines visible) while the task never returns.
     proc = subprocess.Popen(
         cmd,
         stdout=subprocess.PIPE,
@@ -263,6 +267,21 @@ def whisper_transcribe_safe(
     t = threading.Thread(target=_stderr_reader, args=(proc,), daemon=True)
     t.start()
 
+    # Drain stdout in parallel to avoid deadlocks on large JSON payloads.
+    stdout_chunks: list[bytes] = []
+
+    def _stdout_reader(p: subprocess.Popen) -> None:
+        if not p.stdout:
+            return
+        while True:
+            chunk = p.stdout.read(4096)  # type: ignore[union-attr]
+            if not chunk:
+                break
+            stdout_chunks.append(chunk)
+
+    t_out = threading.Thread(target=_stdout_reader, args=(proc,), daemon=True)
+    t_out.start()
+
     # Pump stderr LIVE while process runs
     while proc.poll() is None:
         try:
@@ -279,10 +298,17 @@ def whisper_transcribe_safe(
         except queue.Empty:
             break
 
-    # Read stdout JSON after worker ends
-    out_bytes = b""
-    if proc.stdout:
-        out_bytes = proc.stdout.read() or b""
+    # Ensure reader threads are done and collect stdout.
+    try:
+        t.join(timeout=1.0)
+    except Exception:
+        pass
+    try:
+        t_out.join(timeout=1.0)
+    except Exception:
+        pass
+
+    out_bytes = b"".join(stdout_chunks)
     out = out_bytes.decode("utf-8", errors="replace")
     err = "\n".join(stderr_all)
 
