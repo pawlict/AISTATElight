@@ -129,7 +129,7 @@ This project is released under the **AISTATElight License v1.2 (Source-Available
 Third-party license notices: see **THIRD_PARTY_NOTICES.md**.
 ---
 ---
-## Changes (v 2.2.2) Refactor:
+## Changes (v 2.2.2)
 - Fix for large transcriptions (prevents stdout pipe blocking / deadlock)
 ## Changes (v 2.2.1) Refactor: gui_pyside.py
 
