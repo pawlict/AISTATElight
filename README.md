@@ -1,5 +1,5 @@
 ## AISTATE Light — *Artificial Intelligence Speech‑To‑Analysis‑Translation Engine*
-![Version](https://img.shields.io/badge/version-v2.2.2-green)
+![Version](https://img.shields.io/badge/version-v2.3-green)
 ![Python](https://img.shields.io/badge/python-3.8+-yellow)
 
 ---
@@ -129,6 +129,9 @@ This project is released under the **AISTATElight License v1.2 (Source-Available
 Third-party license notices: see **THIRD_PARTY_NOTICES.md**.
 ---
 ---
+## Changes (v 2.3)
+- Added single-file project workflow: you can now Save Project and later Open Project to continue editing without reprocessing.
+
 ## Changes (v 2.2.2)
 - Fix for large transcriptions (prevents stdout pipe blocking / deadlock)
 ## Changes (v 2.2.1) Refactor: gui_pyside.py
