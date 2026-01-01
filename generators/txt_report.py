@@ -5,7 +5,7 @@ from typing import Any, Dict, List
 
 DEFAULT_PROGRAM = "AISTATElight"
 DEFAULT_AUTHOR_EMAIL = "pawlict@proton.me"
-DEFAULT_LICENSE_NAME = "AISTATElight License v1.2 (Source-Available)"
+DEFAULT_LICENSE_NAME = "AISTATElight License v1.2"
 
 
 def _lines_from_transcript(x: Any) -> List[str]:
