@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Tuple
 
 DEFAULT_PROGRAM = "AISTATElight"
 DEFAULT_AUTHOR_EMAIL = "pawlict@proton.me"
-DEFAULT_LICENSE_NAME = "AISTATElight License v1.2 (Source-Available)"
+DEFAULT_LICENSE_NAME = "AISTATElight License v1.2"
 
 # Accept:
 # [00:01.23–00:05.67] SPEAKER_00 [MUZYKA]: tekst...
