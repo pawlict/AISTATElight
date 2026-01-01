@@ -677,7 +677,7 @@ class SpeakerNamesPanel(QWidget):
 
         for spk in speakers_list:
             le = QLineEdit(self)
-            le.setPlaceholderText("np. Jan / Justyna / Tomek")
+            le.setPlaceholderText("np. Maks")
             self._edit_fields[spk] = le
             self.form.addRow(QLabel(spk, self), le)
 
