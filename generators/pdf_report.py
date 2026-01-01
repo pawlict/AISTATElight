@@ -9,7 +9,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 DEFAULT_PROGRAM = "AISTATElight"
 DEFAULT_AUTHOR_EMAIL = "pawlict@proton.me"
-DEFAULT_LICENSE_NAME = "AISTATElight License v1.2 (Source-Available)"
+DEFAULT_LICENSE_NAME = "AISTATElight License v1.2"
 
 
 # --- Minimal timestamp/speaker parser (no Qt deps) ---
